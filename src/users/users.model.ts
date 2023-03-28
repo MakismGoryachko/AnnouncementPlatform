@@ -1,12 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import { ApiProperty } from "@nestjs/swagger"
+import { Announcement } from "src/announcement/announcement.model"
 
 @Entity('users')
 export class User {
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @PrimaryGeneratedColumn()
     id: number
-
+    
     @ApiProperty({ example: 'user@mail.com', description: 'Почтовый адрес' })
     @Column({
         length: 20,
@@ -30,4 +31,7 @@ export class User {
         default: 'USER'
     })
     role: string
+
+    @OneToMany(() => Announcement, announcement => announcement.user)
+    announcements: Announcement[]
 }

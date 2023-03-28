@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/users.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { AnnouncementModule } from './announcement/announcement.module';
+import { Announcement } from './announcement/announcement.model';
 
 
 
@@ -22,12 +24,13 @@ import { AuthModule } from './auth/auth.module';
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRESS_PASSWORD,
         database: process.env.POSTGRES_DB,
-        entities: [User],
+        entities: [User, Announcement],
         synchronize: true,
         logging: false,
       }),
       UsersModule,
-      AuthModule
+      AuthModule,
+      AnnouncementModule
     ],
   }
 )
