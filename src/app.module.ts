@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AnnouncementModule } from './announcement/announcement.module';
 import { Announcement } from './announcement/announcement.model';
+import { FilesModule } from './files/files.module';
 
 
 
@@ -30,7 +31,8 @@ import { Announcement } from './announcement/announcement.model';
       }),
       UsersModule,
       AuthModule,
-      AnnouncementModule
+      AnnouncementModule,
+      FilesModule
     ],
   }
 )

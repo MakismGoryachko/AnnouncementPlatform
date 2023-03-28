@@ -16,7 +16,7 @@ export class AnnouncementController {
     @UseInterceptors(FileInterceptor('image'))
     createDevice(@Body() dto: createAnnouncementDto,
                  @UploadedFile() image) {
-        return this.announcementService.createDevice(dto, image)
+        return this.announcementService.createAnnouncement(dto, image)
     }
     }
 
