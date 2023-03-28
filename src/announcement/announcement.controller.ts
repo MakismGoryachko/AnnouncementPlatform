@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Announcement } from './announcement.model';
 import { AnnouncementService } from './announcement.service';
@@ -12,7 +13,10 @@ export class AnnouncementController {
     @ApiOperation({summary: "Создание объявления"})
     @ApiResponse({status: 200, type: Announcement})
     @Post()
-    create(@Body() announcementDto: createAnnouncementDto){
-        //return this.announcementService.createUser(announcementDto)
+    @UseInterceptors(FileInterceptor('image'))
+    createDevice(@Body() dto: createAnnouncementDto,
+                 @UploadedFile() image) {
+        return this.announcementService.createDevice(dto, image)
     }
-}
+    }
+

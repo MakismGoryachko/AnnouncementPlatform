@@ -21,5 +21,4 @@ export class createAnnouncementDto {
     @IsString({ message: 'Должно быть строкой' })
     readonly area: string;
 
-
 }
