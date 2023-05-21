@@ -8,7 +8,7 @@ async function bootstrap() {
 
   const PORT = process.env.PORT || 8080
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const config = new DocumentBuilder()
     .setTitle('Announcement platform')

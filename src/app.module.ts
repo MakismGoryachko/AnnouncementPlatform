@@ -7,8 +7,13 @@ import { AuthModule } from './auth/auth.module';
 import { AnnouncementModule } from './announcement/announcement.module';
 import { Announcement } from './announcement/announcement.model';
 import { FilesModule } from './files/files.module';
-
-
+import { RegionController } from './region/region.controller';
+import { RegionModule } from './region/region.module';
+import { CategoryModule } from './category/category.module';
+import { Category } from './category/category.model';
+import { Region } from './region/region.model';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module(
   {
@@ -18,6 +23,9 @@ import { FilesModule } from './files/files.module';
       ConfigModule.forRoot({
         envFilePath: `.env`
       }),
+      ServeStaticModule.forRoot({
+        rootPath: path.resolve(__dirname, 'static'),
+      }),
       TypeOrmModule.forRoot({
         type: 'postgres',
         host: process.env.POSTGRES_HOST,
@@ -25,14 +33,16 @@ import { FilesModule } from './files/files.module';
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRESS_PASSWORD,
         database: process.env.POSTGRES_DB,
-        entities: [User, Announcement],
+        entities: [User, Announcement, Category, Region],
         synchronize: true,
         logging: false,
       }),
       UsersModule,
       AuthModule,
       AnnouncementModule,
-      FilesModule
+      FilesModule,
+      RegionModule,
+      CategoryModule
     ],
   }
 )

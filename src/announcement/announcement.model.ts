@@ -1,6 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from "typeorm"
 import { ApiProperty } from "@nestjs/swagger"
 import { User } from 'src/users/users.model'
+import { Region } from "src/region/region.model"
+import { Category } from "src/category/category.model"
+import { ForeignKey } from "sequelize-typescript"
 
 @Entity('announcements')
 export class Announcement {
@@ -22,20 +25,31 @@ export class Announcement {
 
     @ApiProperty({ example: '150', description: 'Стоимость' })
     @Column()
-    price: number
+    cost: number
 
-    @ApiProperty({ example: 'Фрунзенский', description: 'Район' })
-    @Column({
-        length: 25
-    })
-    area: string
-    
     @ApiProperty({ example: 'Фото', description: 'Фото' })
     @Column({
         nullable: false
     })
     image: string
 
+    @ApiProperty({ example: '12.05.2023', description: 'Дата публикации' })
+    @Column({
+        nullable: false
+    })
+    publicationDate: string
+
+    @Column()
+    userId: number
+
+    @Column()
+    category: string
+
+    @Column()
+    region: string
+
     @ManyToOne(() => User, user => user.announcements)
     user: User
+
 }
+

@@ -31,7 +31,7 @@ export class User {
         default: 'USER'
     })
     role: string
-
-    @OneToMany(() => Announcement, announcement => announcement.user)
+    
+    @OneToMany(() => Announcement, (announcement) => announcement.userId)
     announcements: Announcement[]
 }
