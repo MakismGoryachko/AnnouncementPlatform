@@ -3,8 +3,8 @@ import { ApiProperty } from "@nestjs/swagger"
 import { User } from 'src/users/users.model'
 
 
-@Entity('announcements')
-export class Announcement {
+@Entity('active_announcements')
+export class ActiveAnnouncement {
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @PrimaryGeneratedColumn()
     id: number
@@ -70,5 +70,8 @@ export class Announcement {
     @ManyToOne(() => User, user => user.announcements)
     user: User
 
+    get ownerName(): string {
+        return this.user.name
+    }
 }
 

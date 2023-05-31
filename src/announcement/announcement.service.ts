@@ -12,8 +12,9 @@ export class AnnouncementService {
     private announcementRepository: Repository<Announcement>,
         private fileService: FilesService) { }
 
-    async createAnnouncement(dto: createAnnouncementDto, image: string) {
+    async createAnnouncement(dto: createAnnouncementDto, image: any) {
         const fileName = await this.fileService.createFile(image)
+        console.log(dto)
         let date = new Date()
         let month = date.getMonth() + 1
         let day = date.getDate()
@@ -29,7 +30,7 @@ export class AnnouncementService {
         const device = await this.announcementRepository.save({ ...dto, image: fileName, publicationDate: `${dayString}.${monthString}.${yearString}` })
         return device;
     }
-
+    
     async getAllAnnouncement() {
         const allAnnouncement = await this.announcementRepository.find()
         return allAnnouncement;
@@ -65,9 +66,14 @@ export class AnnouncementService {
         const updateAnnouncement = await this.announcementRepository.save(announcement)
         return updateAnnouncement
     }
-
+    
     async deleteAnnouncement(id: number) {
         const res = await this.announcementRepository.delete(id)
         return 200
+    }
+
+    async getUserAnnouncement(userId: number){
+        const allAnnouncement = await this.announcementRepository.find({where: {userId} })
+        return allAnnouncement;
     }
 }

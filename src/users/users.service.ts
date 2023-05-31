@@ -19,6 +19,12 @@ export class UsersService {
         const user = await this.userRepository.findOne({where: {email}})
         return user;
     }
+
+    async getOneUser(id: number){
+        const user = await this.userRepository.findOne({where: {id}})
+        console.log(user)
+        return user;
+    }
     
     async updateuser(dto: createUserDto){
         const email = dto.email

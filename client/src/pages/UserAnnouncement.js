@@ -1,66 +1,58 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
+import { getAdvertisements, getAdvertisementsModeration, getFavourite } from '../http/announcementApi';
+import React, { useContext, useEffect, useState } from 'react';
+import { Col } from 'react-bootstrap';
+import UserAnnouncementList from '../components/UserAnnouncementList';
+import { Context } from '..';
+import ModerationAnnouncementList from '../components/ModerationAnnouncementList';
+import FavouriteAnnouncementList from '../components/FavouriteAnnouncementList';
 
-const AdvertisementPage = () => {
-    const [activeAds, setActiveAds] = useState([]);
-    const [pendingAds, setPendingAds] = useState([]);
-    const [favoriteAds, setFavoriteAds] = useState([]);
-    const [selectedButton, setSelectedButton] = useState('active');
 
-    const handleActiveAdsClick = () => {
-        setSelectedButton('active');
-    };
+const AdvertisementsPage = () => {
+    const { device } = useContext(Context)
+    const [activeList, setActiveList] = useState(0)
+    useEffect(() => {
+        getAdvertisements().then(data => device.setDevices(data))
+    }, [])
 
-    const handlePendingAdsClick = () => {
-        setSelectedButton('pending');
-    };
+    const moderation = async () => {
+        getAdvertisementsModeration().then(data => device.setDevices(data))
+    }
 
-    const handleFavoriteAdsClick = () => {
-        setSelectedButton('favorite');
-    };
-    
+    const active = async () => {
+        getAdvertisements().then(data => device.setDevices(data))
+    }
+
+    const favourite = async () => {
+        getFavourite().then(data => device.setDevices(data))
+    }
+
+    const changesLists = async (callBack, count) => {
+        await callBack()
+        setActiveList(count)
+    }
     return (
         <Container>
-            <Row>
-                <Col>
-                    <h1>Объявления</h1>
-                    <div>
-                        <Button
-                            variant="primary"
-                            onClick={handleActiveAdsClick}
-                            active={selectedButton === 'active'}
-                        >
-                            Активные
-                        </Button>{' '}
-                        <Button
-                            variant="primary"
-                            onClick={handlePendingAdsClick}
-                            active={selectedButton === 'pending'}
-                        >
-                            На модерации
-                        </Button>{' '}
-                        <Button
-                            variant="primary"
-                            onClick={handleFavoriteAdsClick}
-                            active={selectedButton === 'favorite'}
-                        >
-                            Избранное
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <h2>
-                        {selectedButton === 'active' && 'Активные объявления'}
-                        {selectedButton === 'pending' && 'Объявления на модерации'}
-                        {selectedButton === 'favorite' && 'Избранные объявления'}
-                    </h2>
-                    {/* Код для отображения соответствующих объявлений */}
+            <Row className="mt-5" md={3}>
+                <Button className='mt-2' variant={"outline-dark"} style={{ width: '400px' }} onClick={() => changesLists(active, 0)}>Активные</Button>
+                <Button className='mt-2 ms-1 w-10' variant={"outline-dark"} style={{ width: '400px' }} onClick={() => changesLists(moderation, 1)}>На модерации</Button>
+                <Button className='mt-2 ms-1 w-10' variant={"outline-dark"} style={{ width: '400px' }} onClick={() => changesLists(favourite, 2)}>Избранное</Button>
+                <Col md={9}>
+                    {activeList === 0 ?
+                        <UserAnnouncementList />
+                        :
+                        activeList === 1 ?
+                            <ModerationAnnouncementList />
+                            :
+                            activeList === 2 ?
+                            <FavouriteAnnouncementList />
+                            :
+                            <></>
+                    }
                 </Col>
             </Row>
         </Container>
     );
 };
 
-export default AdvertisementPage;
+export default AdvertisementsPage;

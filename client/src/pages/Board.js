@@ -4,13 +4,13 @@ import TypeBar from '../components/TypeBar';
 import BrandBar from '../components/RegionBar';
 import AnnouncementList from '../components/AnnouncementList';
 import { Context } from '..';
-import { getAllAnnouncement } from '../http/announcementApi';
+import { getActiveAllAnnouncement } from '../http/announcementApi';
 
 const Board = () => {
     const {device} = useContext(Context)
     
     useEffect(() => {
-        getAllAnnouncement().then(data => device.setDevices(data))
+        getActiveAllAnnouncement().then(data => device.setDevices(data))
     }, [])
     return (
         <Container>

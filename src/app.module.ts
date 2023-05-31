@@ -14,10 +14,16 @@ import { Category } from './category/category.model';
 import { Region } from './region/region.model';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { NestjsFormDataModule } from 'nestjs-form-data';
+import { ActiveAnnouncementModule } from './active_announcement/activeAnnouncement.module';
+import { ActiveAnnouncement } from './active_announcement/activeAnnouncement.model';
+import { FavouriteAnnouncement } from './favourite_announcement/favouriteAnnouncement.model';
+import { FavouriteAnnouncementModule } from './favourite_announcement/favouriteAnnouncement.module';
+import { RatingController } from './rating/rating.controller';
 
 @Module(
   {
-    controllers: [],
+    controllers: [RatingController],
     providers: [],
     imports: [
       ConfigModule.forRoot({
@@ -26,6 +32,7 @@ import * as path from 'path';
       ServeStaticModule.forRoot({
         rootPath: path.resolve(__dirname, 'static'),
       }),
+      NestjsFormDataModule,
       TypeOrmModule.forRoot({
         type: 'postgres',
         host: process.env.POSTGRES_HOST,
@@ -33,7 +40,7 @@ import * as path from 'path';
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRESS_PASSWORD,
         database: process.env.POSTGRES_DB,
-        entities: [User, Announcement, Category, Region],
+        entities: [User, Announcement, Category, Region, ActiveAnnouncement, FavouriteAnnouncement],
         synchronize: true,
         logging: false,
       }),
@@ -42,8 +49,11 @@ import * as path from 'path';
       AnnouncementModule,
       FilesModule,
       RegionModule,
-      CategoryModule
+      CategoryModule,
+      ActiveAnnouncementModule,
+      FavouriteAnnouncementModule
+
     ],
   }
 )
-export class AppModule {}
+export class AppModule { }

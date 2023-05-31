@@ -16,20 +16,20 @@ const Auth = observer(() => {
     const [password, setPassword] = useState('')
 
     const click = async () => {
-        try{
+        try {
             let data;
-            if(isLogin) {
+            if (isLogin) {
                 data = await login(email, name ,password)
             } else {
-                data = await registration(email, name ,password)
+                data = await registration(email, name, password)
             }
             user.setUser(data)
-            user.setIsAuth(true)    
+            user.setIsAuth(true)
             console.log(user.isAuth)
             navigate(BOARD_ROUTE)
-    } catch (e) {
-        alert(e.response.data.message)
-    }
+        } catch (e) {
+            alert(e.response.data.message)
+        }
     }
 
     return (
@@ -37,47 +37,85 @@ const Auth = observer(() => {
             className="d-flex justify-content-center align-items-center"
             style={{ height: window.innerHeight - 54 }}
         >
-            <Card style={{ width: 600 }} className="p-5">
-                <h2 className="m-auto">{isLogin ? "Авторизация" : "Регистрация"}</h2>
-                <Form className="d-flex flex-column">
-                    <Form.Control
-                        className="mt-3"
-                        placeholder="Введите ваш email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                    <Form.Control
-                        className="mt-3"
-                        placeholder="Введите ваше имя"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                    />
-                    <Form.Control
-                        className="mt-3"
-                        placeholder="Введите ваш пароль"
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                    <div className="d-flex flex-row justify-content-between mt-3">
-                        {isLogin ?
-                            <div>
-                                Нет аккаунта? <NavLink style={{ textDecoration: "none" }} to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
-                            </div>
-                            :
-                            <div>
-                                Есть аккаунт? <NavLink style={{ textDecoration: "none" }} to={LOGIN_ROUTE}>Войти!</NavLink>
-                            </div>
-                        }
-                        <Button
-                            variant={"outline-dark"}
-                            onClick={click}
-                        >
-                            {isLogin ? "Войти" : "Зарегистрироваться"}
-                        </Button>
-                    </div>
-                </Form>
-            </Card>
+            {isLogin ?
+                <Card style={{ width: 600 }} className="p-5">
+                    <h2 className="m-auto">{isLogin ? "Авторизация" : "Регистрация"}</h2>
+                    <Form className="d-flex flex-column">
+                        <Form.Control
+                            className="mt-3"
+                            placeholder="Введите ваш email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <Form.Control
+                            className="mt-3"
+                            placeholder="Введите ваш пароль"
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <div className="d-flex flex-row justify-content-between mt-3">
+                            {isLogin ?
+                                <div>
+                                    Нет аккаунта? <NavLink style={{ textDecoration: "none" }} to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
+                                </div>
+                                :
+                                <div>
+                                    Есть аккаунт? <NavLink style={{ textDecoration: "none" }} to={LOGIN_ROUTE}>Войти!</NavLink>
+                                </div>
+                            }
+                            <Button
+                                variant={"outline-dark"}
+                                onClick={click}
+                            >
+                                {isLogin ? "Войти" : "Зарегистрироваться"}
+                            </Button>
+                        </div>
+                    </Form>
+                </Card>
+                :
+                <Card style={{ width: 600 }} className="p-5">
+                    <h2 className="m-auto">{isLogin ? "Авторизация" : "Регистрация"}</h2>
+                    <Form className="d-flex flex-column">
+                        <Form.Control
+                            className="mt-3"
+                            placeholder="Введите ваш email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <Form.Control
+                            className="mt-3"
+                            placeholder="Введите ваше имя"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
+                        />
+                        <Form.Control
+                            className="mt-3"
+                            placeholder="Введите ваш пароль"
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <div className="d-flex flex-row justify-content-between mt-3">
+                            {isLogin ?
+                                <div>
+                                    Нет аккаунта? <NavLink style={{ textDecoration: "none" }} to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
+                                </div>
+                                :
+                                <div>
+                                    Есть аккаунт? <NavLink style={{ textDecoration: "none" }} to={LOGIN_ROUTE}>Войти!</NavLink>
+                                </div>
+                            }
+                            <Button
+                                variant={"outline-dark"}
+                                onClick={click}
+                            >
+                                {isLogin ? "Войти" : "Зарегистрироваться"}
+                            </Button>
+                        </div>
+                    </Form>
+                </Card>
+            }
         </Container>
     )
 })

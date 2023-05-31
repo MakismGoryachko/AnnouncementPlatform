@@ -17,7 +17,7 @@ export class AuthController {
         return this.authSetvice.login(userDto)
         
     }
-
+    
     @ApiOperation({summary: "Регистрация"})
     @ApiResponse({status: 200, type: User})
     @Post('/registration')

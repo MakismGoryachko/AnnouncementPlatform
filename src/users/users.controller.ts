@@ -24,6 +24,12 @@ export class UsersController {
         return this.usersService.getUserByEmail(email)
     }
 
+    
+    @Get('/oneUser/:id')
+    getOneUser(@Param('id') id: number){
+        return this.usersService.getOneUser(id)
+    }
+
     @ApiOperation({summary: "Обновление имени пользователя"})
     @ApiResponse({status: 200, type: User})
     @Post('/update')

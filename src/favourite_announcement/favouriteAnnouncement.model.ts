@@ -3,8 +3,8 @@ import { ApiProperty } from "@nestjs/swagger"
 import { User } from 'src/users/users.model'
 
 
-@Entity('announcements')
-export class Announcement {
+@Entity('favourite_announcements')
+export class FavouriteAnnouncement {
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @PrimaryGeneratedColumn()
     id: number
@@ -52,6 +52,11 @@ export class Announcement {
         nullable: true
     })
     userId: number
+
+    @Column({
+        nullable: true
+    })
+    ownerId: number
 
     @Column(
         {

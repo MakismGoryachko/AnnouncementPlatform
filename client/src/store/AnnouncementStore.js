@@ -21,6 +21,7 @@ export default class UsersStore {
         this._devices = []
         this._selectedType = {}
         this._selectedBrand = {}
+        this._ownerAnnouncement = []
         makeAutoObservable(this)
     }
 
@@ -38,6 +39,13 @@ export default class UsersStore {
     }
     setSelectedBrand(brand) {
         this._selectedBrand = brand
+    }
+    setOwnerAnnouncement(ownerAnnouncement)
+    {
+        this._ownerAnnouncement = ownerAnnouncement
+    }
+    get ownerAnnouncement() {
+        return this._ownerAnnouncement
     }
     get types() {
         return this._types
